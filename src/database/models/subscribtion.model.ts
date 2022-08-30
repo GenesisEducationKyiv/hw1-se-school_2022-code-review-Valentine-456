@@ -2,12 +2,12 @@ import { readFile, writeFile } from "fs/promises";
 import { resolve } from "path";
 import { randomUUID } from "crypto";
 
-interface SubscribtionInterface {
+interface ISubscribtion {
   _id: string;
   email: string;
 }
 
-class Subscribtion implements SubscribtionInterface {
+class Subscribtion implements ISubscribtion {
   _id: string;
   email: string;
 

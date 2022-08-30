@@ -7,13 +7,13 @@ const subscribe: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.post<{ Body: ISubscribeBody }>(
     "/",
     subscribeValidationSchema,
-    getSubscription
+    subscribeEmail
   );
 };
 
 export default subscribe;
 
-async function getSubscription(
+async function subscribeEmail(
   request: FastifyRequest<{ Body: ISubscribeBody }>,
   reply: FastifyReply
 ) {

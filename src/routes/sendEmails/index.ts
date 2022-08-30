@@ -1,28 +1,24 @@
 import { FastifyPluginAsync } from "fastify";
 import Subscribtion from "../../database/models/subscribtion.model";
-import { sendMail } from "../../utils/emails";
-import CurrencyRateService from "../../services/currencyRateService";
+import CurrencyRateService from "../../services/currencyRate.service";
+import EmailSenderService from "../../services/emailSender.service";
 import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 
-const sendEmails: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.post("/", sendEmailsHandler);
+const sendRateEmails: FastifyPluginAsync = async (fastify): Promise<void> => {
+  fastify.post("/", sendRateEmailsHandler);
 };
 
-export default sendEmails;
+export default sendRateEmails;
 
-async function sendEmailsHandler() {
+async function sendRateEmailsHandler() {
   const rate = await CurrencyRateService.getRate();
   const subject = "Exchange rate: BTC to UAH";
+  const mailingListOptions = { subject, html: rate?.toString() };
 
-  const subs = await Subscribtion.findMany();
-  try {
-    await Promise.allSettled(
-      subs.map((sub) =>
-        sendMail({ subject, text: rate?.toString(), to: sub.email })
-      )
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  const emails = (await Subscribtion.findMany()).map(
+    (subscription) => subscription.email
+  );
+  await EmailSenderService.sendMailingList(mailingListOptions, emails);
+
   return { status: "success", message: HttpResponseMessage.EMAILS_SENT };
 }
