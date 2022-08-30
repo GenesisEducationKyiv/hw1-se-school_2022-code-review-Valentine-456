@@ -11,18 +11,18 @@ const app: FastifyPluginAsync<AppOptions> = async (
 ): Promise<void> => {
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "plugins"),
-    options: opts,
+    options: opts
   });
 
   void fastify.register(AutoLoad, {
     dir: join(__dirname, "routes"),
     ignorePattern: /.*(test|schemas).ts/,
-    options: { ...opts, prefix: "/api" },
+    options: { ...opts, prefix: "/api" }
   });
 
   fastify.register(fastifyEnv, {
     schema: {},
-    dotenv: true,
+    dotenv: true
   });
 };
 

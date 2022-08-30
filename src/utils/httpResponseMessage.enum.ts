@@ -5,7 +5,7 @@ const HttpResponseMessage = {
   EMAIL_EXISTS: "This email is already registered!",
   EMAILS_SENT: "Mailing is sent out!",
   NO_EMAIL: "Email is required",
-  BAD_REQUEST: "Bad request",
+  BAD_REQUEST: "Bad request"
 } as const;
 
 export { HttpResponseMessage };

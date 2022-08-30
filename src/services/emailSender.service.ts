@@ -15,11 +15,11 @@ class EmailSenderService {
     port: 25,
     auth: {
       user: "apikey",
-      pass: `${process.env.API_KEY_1}${process.env.API_KEY_2}`,
+      pass: `${process.env.API_KEY_1}${process.env.API_KEY_2}`
     },
     tls: {
-      rejectUnauthorized: false,
-    },
+      rejectUnauthorized: false
+    }
   });
 
   public static async sendMail(opts: IMailOptions): Promise<void> {

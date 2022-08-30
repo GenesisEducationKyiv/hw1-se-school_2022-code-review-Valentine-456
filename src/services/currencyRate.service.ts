@@ -9,8 +9,8 @@ class CurrencyRateSerivice {
   static async getRate(): Promise<rate> {
     const { statusCode, body } = await fetch(this.url, {
       headers: {
-        "X-CMC_PRO_API_KEY": this.api_key,
-      },
+        "X-CMC_PRO_API_KEY": this.api_key
+      }
     });
     if (statusCode == 200) {
       const { data } = await body.json();
