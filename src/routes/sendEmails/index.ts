@@ -2,6 +2,7 @@ import { FastifyPluginAsync } from "fastify";
 import Subscribtion from "../../database/models/subscribtion.model";
 import { sendMail } from "../../utils/emails";
 import CurrencyRateService from "../../services/currencyRateService";
+import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 
 const sendEmails: FastifyPluginAsync = async (fastify): Promise<void> => {
   fastify.post("/", sendEmailsHandler);
@@ -23,5 +24,5 @@ async function sendEmailsHandler() {
   } catch (error) {
     console.log(error);
   }
-  return { status: "success", message: "Mailing is sent out!" };
+  return { status: "success", message: HttpResponseMessage.EMAILS_SENT };
 }

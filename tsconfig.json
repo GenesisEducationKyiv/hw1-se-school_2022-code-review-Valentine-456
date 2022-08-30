@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "sourceMap": true,
-    "noUnusedLocals": false,                /* Report errors on unused locals. */
+    "noUnusedLocals": false,                
     "noUnusedParameters": false
   },
   "include": ["src/**/*.ts", "src/**/*.json"]
