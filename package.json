@@ -14,7 +14,9 @@
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
     "lint": "prettier --write {src,test}/**/*.{ts,js,json} && eslint {src,test}/**/*.{ts,js,json}",
-    "test": "jest --verbose --coverage"
+    "test:unit": "jest test/unit --verbose --coverage",
+    "test:integration": "jest test/integration --verbose --coverage",
+    "test:e2e": "jest test/e2e --verbose --coverage"
   },
   "keywords": [],
   "author": "",

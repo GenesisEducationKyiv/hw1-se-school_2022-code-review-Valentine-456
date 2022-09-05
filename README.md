@@ -44,6 +44,15 @@ $ docker run -p 5000:5000 fastify_gses_btc_app
 #### `npm run lint`
 Форматує код та запускає лінтер.
 
+#### `npm run test:unit`
+Запускає unit тести.
+
+#### `npm run test:integration`
+Запускає integration тести.
+
+#### `npm run test:e2e`
+Запускає e2e тести стороннього сервісу.
+
 Запустіть [http://localhost:5000](http://localhost:5000) щоб побачити чи протестувати
 
 ***
