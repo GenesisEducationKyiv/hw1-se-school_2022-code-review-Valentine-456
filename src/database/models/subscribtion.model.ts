@@ -40,10 +40,13 @@ class Subscribtion implements ISubscribtion {
 
   async save(): Promise<Subscribtion> {
     const data: Array<Subscribtion> = await Subscribtion.findMany();
-    data.push(this);
+    const dataWithoutSelf: Array<Subscribtion> = data.filter(
+      (subscribtion) => subscribtion._id !== this._id
+    );
+    dataWithoutSelf.push(this);
     await writeFile(
       resolve(__dirname, "../data/subscribtions.json"),
-      JSON.stringify(data),
+      JSON.stringify(dataWithoutSelf),
       { encoding: "utf-8" }
     );
     return this;

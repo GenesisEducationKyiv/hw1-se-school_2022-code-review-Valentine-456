@@ -44,3 +44,4 @@ class EmailSenderService {
 }
 
 export default EmailSenderService;
+export { IMailOptions, IMailingListOptions };
