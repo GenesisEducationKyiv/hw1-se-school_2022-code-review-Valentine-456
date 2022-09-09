@@ -1,11 +1,11 @@
-import {
-  ISubscribtionModel,
-  ISubscribtionModelStatic
-} from "./SubscribtionModel";
+import { ISubscribtionModel } from "./SubscribtionModel";
 
 interface ISubscribtionRepository {
-  Model: ISubscribtionModelStatic & ISubscribtionModel;
+  Model: unknown;
+  findAll(): Promise<Array<ISubscribtionModel>>;
   findOneByEmail(email: string): Promise<ISubscribtionModel | undefined>;
+  createOne(email: string): Promise<ISubscribtionModel | undefined>;
+  serializeToEmails(subscribtions: Array<ISubscribtionModel>): Array<string>;
 }
 
 export { ISubscribtionRepository };

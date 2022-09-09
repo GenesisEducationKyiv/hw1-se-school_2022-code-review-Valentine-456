@@ -1,6 +1,6 @@
 import { FileSystemDB, FileSystemDBTables } from "../../utils/FileSystemDB";
 import { randomUUID } from "crypto";
-import { ISubscribtionModelStatic } from "../../repositories/subscribtion.repository";
+import { ISubscribtionModelStatic } from "../../interfaces/SubscribtionModel";
 import { staticImplements } from "../../utils/staticInterfaces";
 
 @staticImplements<ISubscribtionModelStatic>()

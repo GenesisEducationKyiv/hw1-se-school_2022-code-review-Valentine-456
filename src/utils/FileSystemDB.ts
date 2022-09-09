@@ -8,7 +8,7 @@ const FileSystemDBTables = {
 class FileSystemDB {
   static async readDB(DBTable: string) {
     const data = await readFile(
-      resolve(__dirname, `..database//data/${DBTable}.json`),
+      resolve(__dirname, `../database/data/${DBTable}.json`),
       "utf-8"
     );
     return JSON.parse(data);

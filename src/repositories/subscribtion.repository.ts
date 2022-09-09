@@ -4,16 +4,21 @@ import {
 } from "../interfaces/SubscribtionModel";
 import { ISubscribtionRepository } from "../interfaces/subscriptionRepository";
 
-class SubscribtionRepositoryFS implements ISubscribtionRepository {
-  Model: ISubscribtionModelStatic & ISubscribtionModel;
-  constructor(Model: ISubscribtionModelStatic & ISubscribtionModel) {
+class SubscribtionRepository implements ISubscribtionRepository {
+  Model: any & ISubscribtionModelStatic & ISubscribtionModel;
+  constructor(Model: any & ISubscribtionModelStatic & ISubscribtionModel) {
     this.Model = Model;
+  }
+
+  async findAll(): Promise<Array<ISubscribtionModel>> {
+    const subscribtions = this.Model.findMany();
+    return subscribtions;
   }
 
   async createOne(email: string): Promise<ISubscribtionModel | undefined> {
     const candidate = await this.findOneByEmail(email);
     if (candidate) return;
-    const newSubscription = new this.Model(email);
+    const newSubscription = new this.Model(email).save();
     return newSubscription;
   }
 
@@ -23,18 +28,10 @@ class SubscribtionRepositoryFS implements ISubscribtionRepository {
     return subscribtion;
   }
 
-  async serializeToEmails(
-    subscribtions: Promise<Array<ISubscribtionModel>>
-  ): Promise<Array<string>> {
-    const emails = (await subscribtions).map(
-      (subscription) => subscription.email
-    );
+  serializeToEmails(subscribtions: Array<ISubscribtionModel>): Array<string> {
+    const emails = subscribtions.map((subscription) => subscription.email);
     return emails;
   }
 }
 
-export {
-  ISubscribtionModel,
-  ISubscribtionModelStatic,
-  SubscribtionRepositoryFS
-};
+export { SubscribtionRepository };
