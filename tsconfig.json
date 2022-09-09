@@ -1,6 +1,7 @@
 {
   "extends": "fastify-tsconfig",
   "compilerOptions": {
+    "experimentalDecorators": true,
     "outDir": "dist",
     "sourceMap": true,
     "noUnusedLocals": false,                
