@@ -1,13 +1,10 @@
-import { readFile, writeFile } from "fs/promises";
-import { resolve } from "path";
+import { FileSystemDB, FileSystemDBTables } from "../../utils/FileSystemDB";
 import { randomUUID } from "crypto";
+import { ISubscribtionModelStatic } from "../../interfaces/SubscribtionModel";
+import { staticImplements } from "../../utils/staticInterfaces";
 
-interface ISubscribtion {
-  _id: string;
-  email: string;
-}
-
-class Subscribtion implements ISubscribtion {
+@staticImplements<ISubscribtionModelStatic>()
+class Subscribtion {
   _id: string;
   email: string;
 
@@ -17,24 +14,13 @@ class Subscribtion implements ISubscribtion {
   }
 
   static async findMany(): Promise<Array<Subscribtion>> {
-    const data = await readFile(
-      resolve(__dirname, "../data/subscribtions.json"),
-      "utf-8"
-    );
-    return JSON.parse(data);
+    const data = await FileSystemDB.readDB(FileSystemDBTables.SUBSCRIBTIONS);
+    return data;
   }
 
   static async findById(id: string): Promise<Subscribtion | undefined> {
     const data: Array<Subscribtion> = await Subscribtion.findMany();
     const subscribtion = data.find((sub) => sub._id === id);
-    return subscribtion;
-  }
-
-  static async findOneByEmail(
-    email: string
-  ): Promise<Subscribtion | undefined> {
-    const data: Array<Subscribtion> = await Subscribtion.findMany();
-    const subscribtion = data.find((sub) => sub.email === email);
     return subscribtion;
   }
 
@@ -44,10 +30,9 @@ class Subscribtion implements ISubscribtion {
       (subscribtion) => subscribtion._id !== this._id
     );
     dataWithoutSelf.push(this);
-    await writeFile(
-      resolve(__dirname, "../data/subscribtions.json"),
-      JSON.stringify(dataWithoutSelf),
-      { encoding: "utf-8" }
+    await FileSystemDB.writeToDB(
+      FileSystemDBTables.SUBSCRIBTIONS,
+      dataWithoutSelf
     );
     return this;
   }
