@@ -5,8 +5,16 @@ interface ICurrencyRateServiceFactory {
 }
 
 interface ICurrencyRateService {
-  readonly url: string;
   getRate(): Promise<rate>;
 }
 
-export { ICurrencyRateServiceFactory, ICurrencyRateService, rate };
+interface IHTTPCurrencyRateService {
+  readonly url: string;
+}
+
+export {
+  ICurrencyRateServiceFactory,
+  ICurrencyRateService,
+  IHTTPCurrencyRateService,
+  rate
+};

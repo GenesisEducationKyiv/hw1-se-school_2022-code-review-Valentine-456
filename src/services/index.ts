@@ -1,7 +1,8 @@
 import { ICurrencyRateService } from "../interfaces/currencyRateService";
 import {
   CoinMarketCapCurrencyRateFactory,
-  APILayerCurrencyRateFactory
+  APILayerCurrencyRateFactory,
+  CachingCurrencyRateService
 } from "./currencyRate.service";
 
 let mainCurrencyRateService: ICurrencyRateService;
@@ -17,10 +18,14 @@ const apiLayerCurrencyRateService =
 
 switch (process.env.CRYPTO_CURRENCY_PROVIDER) {
   case "coinmarketcap":
-    mainCurrencyRateService = coinMarketCapCurrencyRateService;
+    mainCurrencyRateService = new CachingCurrencyRateService(
+      coinMarketCapCurrencyRateService
+    );
     break;
   case "apilayer":
-    mainCurrencyRateService = apiLayerCurrencyRateService;
+    mainCurrencyRateService = new CachingCurrencyRateService(
+      apiLayerCurrencyRateService
+    );
     break;
 }
 

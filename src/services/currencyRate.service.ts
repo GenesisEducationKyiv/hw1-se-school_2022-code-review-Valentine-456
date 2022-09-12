@@ -1,6 +1,7 @@
 import { request as fetch } from "undici";
 import {
   ICurrencyRateService,
+  IHTTPCurrencyRateService,
   ICurrencyRateServiceFactory,
   rate
 } from "../interfaces/currencyRateService";
@@ -11,7 +12,9 @@ class CoinMarketCapCurrencyRateFactory implements ICurrencyRateServiceFactory {
   }
 }
 
-class CoinMarketCapCurrencyRateService implements ICurrencyRateService {
+class CoinMarketCapCurrencyRateService
+  implements ICurrencyRateService, IHTTPCurrencyRateService
+{
   readonly url = process.env.COINMARKETCAP_API_URL;
   private api_key;
 
@@ -41,7 +44,9 @@ class APILayerCurrencyRateFactory implements ICurrencyRateServiceFactory {
   }
 }
 
-class APILayerCurrencyRateService implements ICurrencyRateService {
+class APILayerCurrencyRateService
+  implements ICurrencyRateService, IHTTPCurrencyRateService
+{
   constructor(api_key: string) {
     this.api_key = api_key;
   }
@@ -62,4 +67,28 @@ class APILayerCurrencyRateService implements ICurrencyRateService {
   }
 }
 
-export { CoinMarketCapCurrencyRateFactory, APILayerCurrencyRateFactory };
+class CachingCurrencyRateService implements ICurrencyRateService {
+  private currencyRateService: ICurrencyRateService;
+  private readonly CACHE_DURATION_MS = process.env.CACHE_TIME_MS;
+  private latestChacheTime = 0;
+  private cachedRate: rate = null;
+
+  constructor(currencyRateService: ICurrencyRateService) {
+    this.currencyRateService = currencyRateService;
+  }
+
+  async getRate(): Promise<rate> {
+    const delay = Date.now() - this.latestChacheTime;
+    if (delay > this.CACHE_DURATION_MS || this.cachedRate == null) {
+      this.cachedRate = await this.currencyRateService.getRate();
+      this.latestChacheTime = Date.now();
+    }
+    return this.cachedRate;
+  }
+}
+
+export {
+  CoinMarketCapCurrencyRateFactory,
+  APILayerCurrencyRateFactory,
+  CachingCurrencyRateService
+};

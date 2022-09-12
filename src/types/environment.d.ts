@@ -13,6 +13,7 @@ declare global {
       APILAYER_API_URL: string;
       APILAYER_API_KEY: string;
       CRYPTO_CURRENCY_PROVIDER: "coinmarketcap" | "apilayer";
+      CACHE_TIME_MS: number;
     }
   }
 }
