@@ -8,6 +8,7 @@ interface ICurrencyRateServiceFactory {
 
 interface ICurrencyRateService {
   getRate(): Promise<rate>;
+  getProviderInfo(): string;
 }
 
 interface IHTTPCurrencyRateService {

@@ -51,6 +51,10 @@ class CoinMarketCapCurrencyRateService
       return await this.execNext();
     }
   }
+
+  getProviderInfo(): string {
+    return "CoinMarketCap";
+  }
 }
 
 class APILayerCurrencyRateFactory implements ICurrencyRateServiceFactory {
@@ -94,6 +98,10 @@ class APILayerCurrencyRateService
   async execNext(): Promise<rate> {
     if (this.next == null) return null;
     return await this.next.getRate();
+  }
+
+  getProviderInfo(): string {
+    return "APILayer";
   }
 }
 
@@ -139,6 +147,10 @@ class CoinAPICurrencyRateService
     if (this.next == null) return null;
     return await this.next.getRate();
   }
+
+  getProviderInfo(): string {
+    return "CoinAPI";
+  }
 }
 
 class CoinbaseCurrencyRateFactory implements ICurrencyRateServiceFactory {
@@ -178,6 +190,10 @@ class CoinbaseCurrencyRateService
       return await this.execNext();
     }
   }
+
+  getProviderInfo(): string {
+    return "Coinbase";
+  }
 }
 
 class CachingCurrencyRateService implements ICurrencyRateService {
@@ -188,6 +204,9 @@ class CachingCurrencyRateService implements ICurrencyRateService {
 
   constructor(currencyRateService: ICurrencyRateService) {
     this.currencyRateService = currencyRateService;
+  }
+  getProviderInfo(): string {
+    return "Cache";
   }
 
   async getRate(): Promise<rate> {

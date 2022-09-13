@@ -6,6 +6,7 @@ import {
   CoinbaseCurrencyRateFactory,
   CachingCurrencyRateService
 } from "./currencyRate.service";
+import { CurrencyRateProvidersLogger } from "../utils/loggers";
 
 let mainCurrencyRateService: ICurrencyRateService;
 
@@ -22,18 +23,24 @@ const provider3 = new CoinAPICurrencyRateFactory().createCurrencyRateService(
 const provider4 = new CoinbaseCurrencyRateFactory().createCurrencyRateService(
   process.env.COINBASE_API_KEY
 );
-
-provider1.next = provider3;
-provider2.next = provider3;
-provider3.next = provider4;
+provider1.next = new CurrencyRateProvidersLogger(provider3);
+provider2.next = new CurrencyRateProvidersLogger(provider3);
+provider3.next = new CurrencyRateProvidersLogger(provider4);
 
 switch (process.env.CRYPTO_CURRENCY_PROVIDER) {
   case "coinmarketcap":
-    mainCurrencyRateService = new CachingCurrencyRateService(provider1);
+    mainCurrencyRateService = new CachingCurrencyRateService(
+      new CurrencyRateProvidersLogger(provider1)
+    );
     break;
   case "apilayer":
-    mainCurrencyRateService = new CachingCurrencyRateService(provider2);
+    mainCurrencyRateService = new CachingCurrencyRateService(
+      new CurrencyRateProvidersLogger(provider2)
+    );
     break;
 }
+mainCurrencyRateService = new CurrencyRateProvidersLogger(
+  mainCurrencyRateService
+);
 
 export { mainCurrencyRateService };
