@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import CurrencyRateService from "../../services/currencyRate.service";
+import { mainCurrencyRateService } from "../../services/index";
 import EmailSenderService from "../../services/emailSender.service";
 import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 import { subscribtionRepository } from "../../repositories";
@@ -11,7 +11,7 @@ const sendRateEmails: FastifyPluginAsync = async (fastify): Promise<void> => {
 export default sendRateEmails;
 
 async function sendRateEmailsHandler() {
-  const rate = await CurrencyRateService.getRate();
+  const rate = await mainCurrencyRateService.getRate();
   const subject = "Exchange rate: BTC to UAH";
   const mailingListOptions = { subject, html: rate?.toString() };
 
