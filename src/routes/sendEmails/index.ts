@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { mainCurrencyRateService } from "../../services/index";
+import { mainCurrencyRateService } from "../../services/currecyRate.service";
 import EmailSenderService from "../../services/emailSender.service";
 import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 import { subscribtionRepository } from "../../repositories";

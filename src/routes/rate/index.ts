@@ -1,5 +1,5 @@
 import { FastifyPluginAsync, FastifyReply, FastifyRequest } from "fastify";
-import { mainCurrencyRateService } from "../../services/index";
+import { mainCurrencyRateService } from "../../services/currecyRate.service";
 import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 
 const rate: FastifyPluginAsync = async (fastify): Promise<void> => {

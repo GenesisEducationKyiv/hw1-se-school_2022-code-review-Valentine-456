@@ -2,11 +2,9 @@ import {
   IChainedCurrencyRateService,
   ICurrencyRateService,
   rate
-} from "../interfaces/currencyRateService";
+} from "../../interfaces/currencyRateService";
 
-class CurrencyRateProvidersLogger
-  implements ICurrencyRateService, IChainedCurrencyRateService
-{
+class CurrencyRateProvidersLogger {
   private currencyRateProvider: ICurrencyRateService;
 
   constructor(currencyRateProvider: ICurrencyRateService) {
@@ -14,10 +12,6 @@ class CurrencyRateProvidersLogger
     this.next = null;
   }
   next: (IChainedCurrencyRateService & ICurrencyRateService) | null;
-  async execNext(): Promise<rate> {
-    if (this.next == null) return null;
-    return await this.next.getRate();
-  }
   getProviderInfo(): string {
     return "Logger";
   }

@@ -17,7 +17,6 @@ interface IHTTPCurrencyRateService {
 
 interface IChainedCurrencyRateService {
   next: (IChainedCurrencyRateService & ICurrencyRateService) | null;
-  execNext(): Promise<rate>;
 }
 
 export {
