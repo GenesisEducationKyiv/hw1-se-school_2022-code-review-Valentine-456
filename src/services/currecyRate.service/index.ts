@@ -1,12 +1,10 @@
-import { ICurrencyRateService } from "../interfaces/currencyRateService";
-import {
-  CoinMarketCapCurrencyRateFactory,
-  APILayerCurrencyRateFactory,
-  CoinAPICurrencyRateFactory,
-  CoinbaseCurrencyRateFactory,
-  CachingCurrencyRateService
-} from "./currencyRate.service";
-import { CurrencyRateProvidersLogger } from "../utils/loggers";
+import { ICurrencyRateService } from "../../interfaces/currencyRateService";
+import { CurrencyRateProvidersLogger } from "./logger";
+import { CachingCurrencyRateService } from "./cacheProxy";
+import { APILayerCurrencyRateFactory } from "./providers/APILayer.provider";
+import { CoinAPICurrencyRateFactory } from "./providers/CoinAPI.provider";
+import { CoinbaseCurrencyRateFactory } from "./providers/Coinbase.provider";
+import { CoinMarketCapCurrencyRateFactory } from "./providers/CoinMarketCap.provider";
 
 let mainCurrencyRateService: ICurrencyRateService;
 

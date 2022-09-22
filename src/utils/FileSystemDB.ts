@@ -3,24 +3,31 @@ import { resolve } from "path";
 
 const FileSystemDBTables = {
   SUBSCRIBTIONS: "subscribtions"
-};
+} as const;
 
 class FileSystemDB {
-  static async readDB(DBTable: string) {
+  dataFolder: string;
+  constructor(dataFolderFromRootDirectory: string) {
+    this.dataFolder = dataFolderFromRootDirectory;
+  }
+
+  async readDB(DBTable: string) {
     const data = await readFile(
-      resolve(__dirname, `../database/data/${DBTable}.json`),
+      resolve(__dirname, "../", `${this.dataFolder}/${DBTable}.json`),
       "utf-8"
     );
     return JSON.parse(data);
   }
 
-  static async writeToDB(DBTable: string, data: object) {
+  async writeToDB(DBTable: string, data: object) {
     await writeFile(
-      resolve(__dirname, `../database/data/${DBTable}.json`),
+      resolve(__dirname, "../", `${this.dataFolder}/${DBTable}.json`),
       JSON.stringify(data),
       { encoding: "utf-8" }
     );
   }
 }
 
-export { FileSystemDB, FileSystemDBTables };
+const fileSystemDB = new FileSystemDB("database/data");
+
+export { fileSystemDB, FileSystemDBTables };

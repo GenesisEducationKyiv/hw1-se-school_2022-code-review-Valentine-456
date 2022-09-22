@@ -1,4 +1,4 @@
-import { FileSystemDB, FileSystemDBTables } from "../../utils/FileSystemDB";
+import { fileSystemDB, FileSystemDBTables } from "../../utils/FileSystemDB";
 import { randomUUID } from "crypto";
 import { ISubscribtionModelStatic } from "../../interfaces/SubscribtionModel";
 import { staticImplements } from "../../utils/staticInterfaces";
@@ -14,7 +14,7 @@ class Subscribtion {
   }
 
   static async findMany(): Promise<Array<Subscribtion>> {
-    const data = await FileSystemDB.readDB(FileSystemDBTables.SUBSCRIBTIONS);
+    const data = await fileSystemDB.readDB(FileSystemDBTables.SUBSCRIBTIONS);
     return data;
   }
 
@@ -30,7 +30,7 @@ class Subscribtion {
       (subscribtion) => subscribtion._id !== this._id
     );
     dataWithoutSelf.push(this);
-    await FileSystemDB.writeToDB(
+    await fileSystemDB.writeToDB(
       FileSystemDBTables.SUBSCRIBTIONS,
       dataWithoutSelf
     );
