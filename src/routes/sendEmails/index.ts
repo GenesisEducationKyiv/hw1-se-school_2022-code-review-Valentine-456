@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
 import { mainCurrencyRateService } from "../../services/currecyRate.service";
-import EmailSenderService from "../../services/emailSender.service";
+import { emailsSenderService } from "../../services/emailSender.service/index";
 import { HttpResponseMessage } from "../../utils/httpResponseMessage.enum";
 import { subscribtionRepository } from "../../repositories";
 
@@ -18,6 +18,6 @@ async function sendRateEmailsHandler() {
   const subscribtions = await subscribtionRepository.findAll();
   const emails = subscribtionRepository.serializeToEmails(subscribtions);
 
-  await EmailSenderService.sendMailingList(mailingListOptions, emails);
+  await emailsSenderService.sendMailingList(mailingListOptions, emails);
   return { status: "success", message: HttpResponseMessage.EMAILS_SENT };
 }
