@@ -1,0 +1,28 @@
+version: '3'
+services:
+  currency-rate:
+    build:
+      context: ./currencyRate
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    networks:
+      - btc-app
+  users:
+    build:
+      context: ./users
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5001:5001
+    networks:
+      - btc-app
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - currency-rate
+
+networks:
+    btc-app:

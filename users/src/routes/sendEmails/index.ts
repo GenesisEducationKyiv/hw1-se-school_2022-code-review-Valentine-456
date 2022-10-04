@@ -13,9 +13,8 @@ export default sendRateEmails;
 async function sendRateEmailsHandler() {
   console.log("data \n\n");
 
-  const data = await fetch("http://localhost:5000/api/rate");
-  console.log(data);
-  const rate = await data.body;
+  const data = await fetch("http://currency-rate:5000/api/rate");
+  const rate = await data.body.json();
   const subject = "Exchange rate: BTC to UAH";
   const mailingListOptions = { subject, html: rate?.toString() };
 
