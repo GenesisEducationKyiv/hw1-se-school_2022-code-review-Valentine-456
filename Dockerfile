@@ -6,7 +6,7 @@ ADD ./package.json .
 RUN npm i
 
 ADD . .
-RUN npm run build:ts
+RUN npm run build
 
 EXPOSE 5000
 
