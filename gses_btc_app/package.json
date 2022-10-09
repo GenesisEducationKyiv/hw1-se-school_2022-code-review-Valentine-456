@@ -26,6 +26,7 @@
     "@fastify/env": "^4.0.0",
     "@fastify/multipart": "^7.1.0",
     "@fastify/sensible": "^4.1.0",
+    "amqplib": "^0.10.3",
     "fastify": "^4.0.0",
     "fastify-cli": "^4.3.0",
     "fastify-plugin": "^3.0.0",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.25.1",
+    "@types/amqplib": "^0.8.2",
     "@types/jest": "^29.0.0",
     "@types/jest-json-schema": "^6.1.1",
     "@types/node": "^18.0.0",
