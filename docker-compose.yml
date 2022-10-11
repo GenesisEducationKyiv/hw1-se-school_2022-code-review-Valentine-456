@@ -25,6 +25,18 @@ services:
     networks:
       - rabbitmq_go_net
 
+  application-logger:
+    build:
+      context: ./logger
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5001:5001
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_go_net
+
 
 networks:
   rabbitmq_go_net:
