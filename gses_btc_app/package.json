@@ -28,6 +28,7 @@
     "@fastify/sensible": "^4.1.0",
     "amqplib": "^0.10.3",
     "fastify": "^4.0.0",
+    "fastify-amqp": "^1.1.0",
     "fastify-cli": "^4.3.0",
     "fastify-plugin": "^3.0.0",
     "node-mailjet": "^5.1.1",
