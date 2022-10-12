@@ -1,0 +1,46 @@
+version: '3'
+services:
+  gses-btc-app:
+    build:
+      context: ./gses_btc_app
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_go_net
+
+  rabbitmq:
+    image: rabbitmq:3.9.13-management-alpine
+    container_name: 'rabbitmq'
+    restart: always
+    environment:
+      - "RABBITMQ_DEFAULT_PASS=password"
+      - "RABBITMQ_DEFAULT_USER=username"
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_go_net
+
+  application-logger:
+    build:
+      context: ./logger
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5001:5001
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_go_net
+
+
+networks:
+  rabbitmq_go_net:
+    driver: bridge
