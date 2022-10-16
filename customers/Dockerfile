@@ -19,6 +19,6 @@ COPY --from=BUILD_IMAGE customers/node_modules ./node_modules
 COPY --from=BUILD_IMAGE customers/.env ./.env
 COPY --from=BUILD_IMAGE customers/package.json ./package.json
 
-EXPOSE 5001
+EXPOSE 5002
 
 CMD ["npm", "run", "start"]

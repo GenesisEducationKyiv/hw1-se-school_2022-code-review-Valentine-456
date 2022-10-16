@@ -32,6 +32,7 @@
     "fastify-cli": "^4.3.0",
     "fastify-plugin": "^3.0.0",
     "node-mailjet": "^5.1.1",
+    "node-sagas": "^0.0.6",
     "nodemailer": "^6.7.7",
     "undici": "^5.8.0"
   },

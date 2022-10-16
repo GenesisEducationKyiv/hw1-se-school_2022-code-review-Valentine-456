@@ -40,6 +40,18 @@ services:
     networks:
       - rabbitmq_go_net
 
+  customers:
+    build:
+      context: ./customers
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 5002:5002
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_go_net
+
 
 networks:
   rabbitmq_go_net:

@@ -2,8 +2,7 @@ import { join } from "path";
 import AutoLoad, { AutoloadPluginOptions } from "@fastify/autoload";
 import fastifyEnv from "@fastify/env";
 import { FastifyPluginAsync } from "fastify";
-import {addApplicationLogsFromRabbitMQ} from "./mq/rabbitmq"
-
+import { addApplicationLogsFromRabbitMQ } from "./mq/rabbitmq";
 
 export type AppOptions = Record<string, never> & Partial<AutoloadPluginOptions>;
 
@@ -20,7 +19,7 @@ const app: FastifyPluginAsync<AppOptions> = async (
     schema: {},
     dotenv: true
   });
-  
+
   await addApplicationLogsFromRabbitMQ(fastify);
 };
 

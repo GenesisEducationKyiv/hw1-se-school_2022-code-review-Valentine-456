@@ -10,14 +10,14 @@ async function assertMQs(fastify: FastifyInstance) {
 
 async function addQueueConsumer(fastify: FastifyInstance, queueName: string) {
   fastify.addHook("onReady", async () => {
-  fastify.amqp.channel.consume(queueName, (msg) => {
-    if (msg !== null) {
-      console.log(`${queueName.toUpperCase()}:`, msg.content.toString());
-      fastify.amqp.channel.ack(msg);
-    } else {
-      console.log('Consumer cancelled by server');
-    }
-  });
+    fastify.amqp.channel.consume(queueName, (msg) => {
+      if (msg !== null) {
+        console.log(`${queueName.toUpperCase()}:`, msg.content.toString());
+        fastify.amqp.channel.ack(msg);
+      } else {
+        console.log("Consumer cancelled by server");
+      }
+    });
   });
 }
 
